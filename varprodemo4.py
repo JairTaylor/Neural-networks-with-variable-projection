@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
+'''
+This code is a demonstration of the variable projection method due to Golub and Pereyra.  
+Please see the accompanying pdf Final_Project.pdf for a detailed description.
+'''
 
-This is a temporary script file.
-"""
+
 from  neuralnetworks2 import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,16 +13,6 @@ def numerical_derivative(f,h):
     return lambda x: (f(x+h) - f(x))/h
     
 
-
-#n = 5
-#
-
-
-
-#x =  np.arange(0., 2*np.pi, 1.0)   #observed inputs
-
-
-#x is a list of inputs, y a list of outputs, alpha a list of parameters.
 
 
 
@@ -51,9 +41,7 @@ def JBasis(alpha,t):
     Net.BackPropogateJ()
     #Dalpha = Net.Dparamlist
     return [   [Net.Dparamlist(i)[j] for i in range(Net.layersizes[-1])] for j in range(len(alpha))]
-   
-   #return [ [ -t *np.sin(alpha[0] * t),0,0] ,[ 0,-t*np.sin(alpha[1] * t) ,0 ],[0,0,t* np.exp(alpha[2] * t) ] ]
-    
+
     #given parameters alpha and input x, return Jacobian: do_i/dalpha_j
 
 
@@ -72,31 +60,10 @@ def dPhi(alpha, x):
         K = JBasis(alpha,t)
         for i in range(len(M)):
             M[i].append(K[i])
-    
-    #M0 = np.matrix(  [ [ -x[i,0] *np.sin(alpha[0] * x[i,0]),0]   for i in range(len(x)) ] ) 
-    #M1 = np.matrix(  [ [ 0,-x[i,0] *np.sin(alpha[1] * x[i,0])]   for i in range(len(x)) ] )  
+     
     return [np.matrix(m) for m in M]
 
 
-
-#x =  np.arange(-1, 1.2, 0.1)   #observed inputs
-#y =  [3 * np.exp(2*t) + 5 * np.exp(-3 * t) for t in x]      #observed outputs
-#x = np.matrix(x).T
-#y = np.matrix(y).T
-#
-#n = len(x)
-
-#def Phi(alpha,x):
-#    M = [ [  np.exp(alpha[0] * x[i,0]),np.exp(alpha[1] * x[i,0])   ] for i in range(len(x)) ]        
-#    return  np.matrix(M)
-#
-#
-#def dPhi(alpha, x):
-#    M0 = np.matrix(  [ [ x[i,0]*np.exp(alpha[0] * x[i,0]),0]   for i in range(len(x)) ] ) 
-#    M1 = np.matrix(  [ [ 0, x[i,0]*np.exp(alpha[1] * x[i,0])]   for i in range(len(x)) ] )
-#    return (M0, M1)
-#
-#
 def Error(alpha, x):
     Phi_plus = np.linalg.pinv(Phi(alpha,x))
     PPhi = (np.identity(n) - Phi(alpha,x) * Phi_plus    ) 
@@ -196,30 +163,9 @@ for stepnum in range(-2):
     
 
 
-
-#x =  np.arange(0., 2*np.pi, 1.0)   #observed inputs
-
-#a = Phi_plus*y
-#
-#x2 = np.arange(0., 2*np.pi, .01) 
-#y2 =  [a[0,0] * np.cos(alpha[0]*t) + a[1,0] * np.cos(alpha[1]*t) for t in x2]      #observed outputs
-#
-#x3 = np.arange(0., 2*np.pi, .01) 
-#y3 = [3 * np.cos(4*t) + 5 * np.cos(2*t) for t in x3]
-#
-#plt.clf()
-
-
-
 x2 = x
 
 a = Phi_plus * y
-
-
-#y2 = [  a[0] * np.exp(alpha[0]*t) + a[1] * np.exp(alpha[1] * t) for t in x2]
-#print 'y2', y2[0]
-#y2 = [b[0,0] for b in y2]
-#y2 = a[0] 
 
 
 
@@ -233,29 +179,3 @@ plt.plot(x2, y2, color = 'blue')
 
 
 plt.show()
-
-
-
-
-#from neuralnetworks2 import *
-#
-#Net = NeuralNetwork([1,5,3])
-#
-##Net = NeuralNetwork([1,4,2])
-#Net.RandomizeWeights(-2)
-#v = np.matrix(7)
-#Net.ResetDer()
-#Net.Propogate(v)
-#
-#def testd(t):
-#    Net.setweightsfromparamlist([t] + alpha[1:])
-#    Net.Propogate(v)
-#    return Net.Output[0,0]
-#    
-#
-#Net.BackPropogateJ()
-#print Net.DThresholdsJ[0]
-#    
-
-
-
